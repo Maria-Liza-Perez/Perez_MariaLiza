@@ -1,41 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Create User</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users Create</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+      padding: 40px;
+      width: 100%;
+      max-width: 480px;
+      box-sizing: border-box;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fdfdfd;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #f1f1f1;
+      font-size: 15px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      background: #fff;
+      color: #333;
+      box-sizing: border-box;
+      transition: border 0.3s ease;
+    }
+
+    .form-input:focus {
+      border: 2px solid #667eea;
+      outline: none;
+      box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #28a745, #20c997);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(to right, #218838, #198754);
+      transform: translateY(-2px);
+    }
+
+    .error-message {
+      color: #ffb3b3;
+      margin-top: 6px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .btn-link {
+      display: inline-block;
+      padding: 12px 20px;
+      background: linear-gradient(to right, #373bff, #282ca7);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-link:hover {
+      background: linear-gradient(to right, #2529b0, #1f2380);
+      transform: translateY(-2px);
+    }
+
+    .link-wrapper {
+      text-align: center;
+      margin-top: 25px;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen p-6">
-    <form action="<?=site_url('users/create');?>" method="POST" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Create User</h2>
-
-        <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
-        <input 
-            type="text" 
-            id="username" 
-            name="username" 
-            required 
-            class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Enter username"
-        />
-
-        <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-        <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            required 
-            class="w-full px-4 py-2 mb-6 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Enter email"
-        />
-
-        <button 
-            type="submit" 
-            class="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
-        >
-            Save
-        </button>
+<body>
+  <div class="form-container">
+    <h1>Create User</h1>
+    <form id="user-form" action="<?=site_url('users/create/')?>" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required class="form-input" value="<?= isset($username) ? html_escape($username) : '' ?>"/>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-input" value="<?= isset($email) ? html_escape($email) : '' ?>"/>
+        <div id="email-error" class="error-message">Please enter a valid email address.</div>
+      </div>
+      <button type="submit" class="btn-submit">Create User</button>
     </form>
+
+    <div class="link-wrapper">
+      <a href="<?=site_url('/'); ?>" class="btn-link">Return to Home</a>
+    </div>
+  </div>
 </body>
 </html>
