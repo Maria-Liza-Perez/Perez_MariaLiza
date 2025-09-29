@@ -1,6 +1,9 @@
 <?php defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /**
- * Model: UsersModel * * Automatically generated via CLI.
+ * Model: UsersModel * 
+ 
+
+* Automatically generated via CLI.
  */
 
 class UsersModel extends Model{
@@ -13,7 +16,7 @@ class UsersModel extends Model{
         parent::__construct();
     }
 
-    public function page($q = '', $records_per_page = null, $page = null) {
+     public function page($q = '', $records_per_page = null, $page = null) {
  
             if (is_null($page)) {
                 return $this->db->table('users')->get_all();
@@ -37,4 +40,59 @@ class UsersModel extends Model{
                 return $data;
             }
         }
+
+              public function get_user_by_id($id)
+    {
+        return $this->db->table($this->table)
+                        ->where('id', $id)
+                        ->get();
+    }
+
+    public function get_user_by_username($username)
+    {
+        return $this->db->table($this->table)
+                        ->where('username', $username)
+                        ->get();
+    }
+
+    public function update_password($user_id, $new_password) {
+    return $this->db->table($this->table)
+                    ->where('id', $user_id)
+                    ->update([
+                        'password' => password_hash($new_password, PASSWORD_BCRYPT)
+                    ]);
+    }
+
+
+    public function get_all_users()
+    {
+        return $this->db->table($this->table)->get_all();
+    }
+
+    public function get_logged_in_user()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset($_SESSION['user']['id'])) {
+            return $this->get_user_by_id($_SESSION['user']['id']);
+        }
+
+        return null;
+    }
+
+    public function is_username_unique($username, $exclude_id = null)
+    {
+        if ($exclude_id !== null) {
+            // Use raw SQL to avoid syntax issues
+            $sql = "SELECT * FROM users WHERE username = ? AND id != ?";
+            $stmt = $this->db->raw($sql, [$username, $exclude_id]);
+            $result = $stmt->fetch();
+        } else {
+            $result = $this->db->table($this->table)->where('username', $username)->get();
+        }
+        
+        return empty($result);
+    }
 }
