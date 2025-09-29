@@ -1,140 +1,199 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Users Create</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create User</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 20px;
-      color: #fff;
+      background: linear-gradient(135deg, #fbc2eb, #a18cd1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .form-container {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-      padding: 40px;
-      width: 100%;
-      max-width: 480px;
-      box-sizing: border-box;
-      backdrop-filter: blur(8px);
-    }
+```
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3), 
+    0 0 12px rgba(236, 72, 153, 0.4); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: borderGlow 3s infinite ease-in-out;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 30px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #fdfdfd;
-    }
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 0 18px rgba(236, 72, 153, 0.7),
+    0 0 28px rgba(219, 39, 119, 0.6);
+}
 
-    .form-group {
-      margin-bottom: 22px;
-    }
+@keyframes borderGlow {
+  0%   { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 8px rgba(236,72,153,0.3); }
+  25%  { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 14px rgba(219,39,119,0.6); }
+  50%  { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 10px rgba(236,72,153,0.4); }
+  75%  { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 16px rgba(219,39,119,0.7); }
+  100% { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 8px rgba(236,72,153,0.3); }
+}
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #f1f1f1;
-      font-size: 15px;
-    }
+.form-label {
+  font-weight: 600;
+  color: #9d174d;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
 
-    .form-input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-      background: #fff;
-      color: #333;
-      box-sizing: border-box;
-      transition: border 0.3s ease;
-    }
+input, select {
+  transition: all 0.3s ease;
+}
 
-    .form-input:focus {
-      border: 2px solid #667eea;
-      outline: none;
-      box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
-    }
+input:focus, select:focus {
+  border-color: #ec4899 !important;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+}
 
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(to right, #28a745, #20c997);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
-    }
+.btn {
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
 
-    .btn-submit:hover {
-      background: linear-gradient(to right, #218838, #198754);
-      transform: translateY(-2px);
-    }
+.btn::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
 
-    .error-message {
-      color: #ffb3b3;
-      margin-top: 6px;
-      font-size: 13px;
-      display: none;
-    }
+.btn:hover::before {
+  transform: scale(1);
+}
 
-    .btn-link {
-      display: inline-block;
-      padding: 12px 20px;
-      background: linear-gradient(to right, #373bff, #282ca7);
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-top: 20px;
-      transition: all 0.3s ease;
-    }
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+}
 
-    .btn-link:hover {
-      background: linear-gradient(to right, #2529b0, #1f2380);
-      transform: translateY(-2px);
-    }
+.icon-toggle {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.75rem;
+  color: #9ca3af;
+  transition: color 0.3s ease;
+}
 
-    .link-wrapper {
-      text-align: center;
-      margin-top: 25px;
-    }
+.icon-toggle:hover {
+  color: #ec4899;
+  text-shadow: 0 0 6px rgba(236, 72, 153, 0.6);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1.5rem !important;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+```
+
   </style>
 </head>
-<body>
-  <div class="form-container">
-    <h1>Create User</h1>
-    <form id="user-form" action="<?=site_url('users/create/')?>" method="POST">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Enter your username" required class="form-input" value="<?= isset($username) ? html_escape($username) : '' ?>"/>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-input" value="<?= isset($email) ? html_escape($email) : '' ?>"/>
-        <div id="email-error" class="error-message">Please enter a valid email address.</div>
-      </div>
-      <button type="submit" class="btn-submit">Create User</button>
-    </form>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="link-wrapper">
-      <a href="<?=site_url('/'); ?>" class="btn-link">Return to Home</a>
+  <div class="card w-full max-w-md p-8">
+    <h2 class="text-3xl font-bold mb-6 text-pink-700 text-center">Create User</h2>
+
+```
+<?php if(isset($error)): ?>
+  <div class="bg-pink-100 border border-pink-400 text-pink-700 px-4 py-3 rounded mb-4 text-sm">
+    <?= html_escape($error); ?>
+  </div>
+<?php endif; ?>
+
+<form method="POST" action="<?= site_url('users/create'); ?>">
+  <!-- Username -->
+  <div class="mb-5">
+    <label for="username" class="form-label">Username</label>
+    <input 
+      type="text" id="username" name="username" required
+      class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
+      placeholder="Enter username"
+    />
+  </div>
+
+  <!-- Email -->
+  <div class="mb-5">
+    <label for="email" class="form-label">Email</label>
+    <input 
+      type="email" id="email" name="email" required
+      class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
+      placeholder="Enter email"
+    />
+  </div>
+
+  <!-- Password -->
+  <div class="mb-5">
+    <label for="password" class="form-label">Password</label>
+    <div class="relative">
+      <input 
+        type="password" id="password" name="password" required
+        class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none"
+        placeholder="Enter password"
+      />
+      <i class="fa-solid fa-eye icon-toggle absolute cursor-pointer" id="togglePassword"></i>
     </div>
   </div>
+
+  <!-- Role -->
+  <div class="mb-6">
+    <label for="role" class="form-label">Role</label>
+    <select 
+      name="role" id="role" required
+      class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
+    >
+      <option value="user" selected>User</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex gap-4">
+    <button type="submit" class="btn flex-1 bg-pink-600 text-white py-2 hover:bg-pink-700">
+      Create User
+    </button>
+    <a href="<?= site_url('users'); ?>" class="btn flex-1 bg-gray-400 text-white py-2 text-center hover:bg-gray-500">
+      Cancel
+    </a>
+  </div>
+</form>
+```
+
+  </div>
+
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function () {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+
 </body>
 </html>
